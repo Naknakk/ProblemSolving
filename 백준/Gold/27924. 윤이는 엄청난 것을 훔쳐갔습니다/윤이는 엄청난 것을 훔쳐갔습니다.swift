@@ -6,48 +6,65 @@ for _ in 0..<N-1 {
     connections[connect[0]].append(connect[1])
     connections[connect[1]].append(connect[0])
 }
-var leafNodes: [Int] = []
-
-for i in 0..<N {
-    if connections[i].count == 1 {
-        leafNodes.append(i)
-    }
-}
 
 let abc = readLine()!.split{$0 == " "}.map{Int(String($0))!-1}
-let distance = Array(repeating: 0, count: leafNodes.count)
-var distances = Array(repeating: distance, count: 3)
+let policeVisited = 0, yoonVisited = 1, notVisited = -1
+var map = Array(repeating: notVisited, count: N)
 
-for j in 0..<3 {
-        var map = Array(repeating: 0, count: N)
-        var pointer = 0
-        var current = [abc[j]]
+var policeCur = [abc[1], abc[2]], yoonCur = [abc[0]]
+map[policeCur[0]] = policeVisited
+map[policeCur[1]] = policeVisited
+map[yoonCur[0]] = yoonVisited
+
+var result = connections[yoonCur[0]].count == 1 ? "YES" : "NO"
+
+func policeMove() {
+    var policeNext: [Int] = []
+    var pointer = 0
     
-        while pointer < current.count && distances[j].contains(0) {
-            let cur = current[pointer]
+    while pointer < policeCur.count  {
+        let cur = policeCur[pointer]
         
-            for next in connections[cur] {
-                if map[next] != 0 || next == abc[j] {
-                    continue
-                }
-                map[next] = map[cur] + 1
-                
-                current.append(next)
-                
-                
+        for next in connections[cur] {
+            if map[next] == policeVisited {
+                continue
             }
-            pointer += 1
+            map[next] = policeVisited
+            
+            policeNext.append(next)
         }
-        
-        for i in 0..<leafNodes.count {
-            distances[j][i] = map[leafNodes[i]]
-        }
+        pointer += 1
+    }
+    policeCur = policeNext
 }
 
-var result = "NO"
-for i in 0..<leafNodes.count {
-    if distances[0][i] < distances[1][i] && distances[0][i] < distances[2][i] {
-        result = "YES"  
+func yoonMove() {
+    var yoonNext: [Int] = []
+    var pointer = 0
+    
+    bfs: while pointer < yoonCur.count  {
+        let cur = yoonCur[pointer]
+        
+        for next in connections[cur] {
+            if map[next] != notVisited {
+                continue
+            } else if connections[next].count == 1 {
+                result = "YES"
+                break bfs
+            }
+            map[next] = yoonVisited
+            
+            yoonNext.append(next)
+        }
+        pointer += 1
     }
+    yoonCur = yoonNext
 }
+
+while result != "YES" {
+    policeMove()
+    yoonMove()
+    if yoonCur.isEmpty { break }
+}
+
 print(result)
