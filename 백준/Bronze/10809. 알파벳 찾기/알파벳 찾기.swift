@@ -12,4 +12,3 @@ for i in startPoint...endPoint {
         print("-1", terminator: " ")
     }
 }
-
