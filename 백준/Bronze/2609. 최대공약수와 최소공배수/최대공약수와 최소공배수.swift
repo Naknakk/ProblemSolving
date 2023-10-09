@@ -9,7 +9,7 @@ func euclidean(a: Int, b: Int) -> Int {
     }
 }
 
-let resultA = euclidean(a: inputs[0], b: inputs[1])
-let resultB = (inputs[0] * inputs[1]) / resultA
-print(resultA)
-print(resultB)
+let gcd = euclidean(a: inputs[0], b: inputs[1])
+let lcm = (inputs[0] * inputs[1]) / gcd
+print(gcd)
+print(lcm)
