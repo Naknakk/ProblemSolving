@@ -1,22 +1,24 @@
-// recursion without global var
 let NM = readLine()!.split{$0 == " "}.map{Int(String($0))!}
 let (N, M) = (NM[0], NM[1])
+var output = ""
+var remainders = Array(repeating: true, count: N)
 
-func NnM(current: String, remainders: [Bool], level: Int) {
+func NnM(current: String, level: Int) {
     if level == M {
         for i in 0..<N {
             if remainders[i] {
-                print("\(current)\(i+1)")
+                output += "\(current)\(i+1)\n"
             } 
         }
     }
     for i in 0..<N {
         if remainders[i] {
-            var next = remainders
-            next[i] = false
-            NnM(current: "\(current)\(i+1) ", remainders: next, level: level+1)
+            remainders[i] = false
+            NnM(current: "\(current)\(i+1) ", level: level+1)
+            remainders[i] = true
         } 
     }
 }
-let remainders = Array(repeating: true, count: N)
-NnM(current: "", remainders: remainders, level: 1)
+
+NnM(current: "", level: 1)
+print(output)
