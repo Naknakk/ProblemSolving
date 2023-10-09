@@ -9,7 +9,6 @@ func moveAndCheck() -> Bool {
     pointer = pointer == N-1 ? 0 : (pointer+1)
     return circle[pointer] == 1
 }
-
 for _ in 0..<N {
     var counter = 0
     while true {
@@ -21,7 +20,6 @@ for _ in 0..<N {
     result.append(pointer+1)
     circle[pointer] = 0
 }
-
 var output = "<"
 for i in result {
     output += "\(i), "
