@@ -1,0 +1,1 @@
+readLine();print(readLine()!.split{$0==" "}.map{Int($0)!}.filter{(i:Int)in i != 1 && Array(1..<i).filter{i%$0==0}.count==1}.count)
