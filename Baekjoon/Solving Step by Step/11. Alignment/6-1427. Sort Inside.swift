@@ -1,1 +1,0 @@
-print(String(readLine()!.sorted(by: >)))
