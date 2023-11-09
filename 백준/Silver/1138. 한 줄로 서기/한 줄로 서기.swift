@@ -2,14 +2,14 @@ let N = Int(readLine()!)!
 
 var data: [Int] = readLine()!.split{$0 == " "}.map{Int(String($0))!}
 
-var line: [Int] = Array(repeating: N+1, count: N)
+var line: [Int] = Array(repeating: 0, count: N)
 
 for i in 0..<N {
     var count = -1
     var index = 0
     
     while count < data[i] {
-        if line[index] > i {
+        if line[index] == 0 {
             count += 1
         }
         index += 1
