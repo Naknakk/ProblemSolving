@@ -4,12 +4,10 @@ func solution(_ users:[[Int]], _ emoticons:[Int]) -> [Int] {
     var rates: [Int] = Array(repeating: 0, count: emoticons.count)
     var maxAssignCount: Int = 0
     var maxIncomeTotal: Int = 0
-    var assignCount: Int = 0
-    var incomeTotal: Int = 0
-    
+
     func rateCheckAndUpdate() {
-        assignCount = 0
-        incomeTotal = 0
+        var assignCount: Int = 0
+        var incomeTotal: Int = 0
         
         for user in users {
             let limitRate = user[0]
