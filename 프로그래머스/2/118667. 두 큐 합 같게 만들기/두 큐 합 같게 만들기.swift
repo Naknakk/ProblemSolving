@@ -1,30 +1,30 @@
 import Foundation
 
 func solution(_ queue1:[Int], _ queue2:[Int]) -> Int {
-    var arr = [0] + queue1 + queue2
-    for i in 0..<arr.count-1 {
-        arr[i+1] = arr[i] + arr[i+1]
-    }
+    var arr = queue1 + queue2
+    let sum = arr.reduce(0, +)
     
-    let target = arr.last! / 2 
-    if arr.last!%2 != 0 { return -1 }
+    if sum%2 != 0 { return -1 }
+    let target = sum / 2 
     
     var st = 0
-    var en = queue1.count
+    var en = queue1.count-1
+    var currentSum = queue1.reduce(0, +)
     var count = 0
     
     while true {
-        let sum = arr[en] - arr[st]
-        if sum < target {
+        if currentSum < target {
             en += 1
+            guard en < arr.count else { return -1 }
+            currentSum += arr[en]
             count += 1
-        } else if sum > target {
+        } else if currentSum > target {
+            guard st < arr.count  else { return -1 }
+            currentSum -= arr[st]
             st += 1
             count += 1
         } else {
             return count
         }
-        
-        guard en < arr.count && st < arr.count  else { return -1 }
     }
 }
