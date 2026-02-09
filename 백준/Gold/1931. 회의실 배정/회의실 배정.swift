@@ -15,7 +15,7 @@ var current = times[0]
 var count = 1
 
 for i in 1..<times.count {
-    var next = times[i]
+    let next = times[i]
     if next.0 >= current.1 {
         current = next
         count += 1
