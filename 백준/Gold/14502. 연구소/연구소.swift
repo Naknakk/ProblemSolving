@@ -48,6 +48,7 @@ for wallCase in wallCases {
             }
             
             var queue: [(Int, Int)] = [(i, j)]
+            visitMap[i][j] = true
             var pointer = 0
             while pointer < queue.count {
                 let cur = queue[pointer]
