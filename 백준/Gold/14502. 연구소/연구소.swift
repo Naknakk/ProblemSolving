@@ -39,38 +39,34 @@ for wallCase in wallCases {
     for coor in coors {
         currentMap[coor.0][coor.1] = wall
     }
-    var visitMap = Array(repeating: Array(repeating: false, count: M), count: N)
+    var queue: [(Int, Int)] = []
+    var pointer = 0
     
     for i in 0..<N {
         for j in 0..<M {
-            if currentMap[i][j] != virus || visitMap[i][j] {
-                continue
-            }
-            
-            var queue: [(Int, Int)] = [(i, j)]
-            visitMap[i][j] = true
-            var pointer = 0
-            while pointer < queue.count {
-                let cur = queue[pointer]
-                
-                for k in 0..<4 {
-                    let nr = cur.0 + dr[k]
-                    let nc = cur.1 + dc[k]
-                    
-                    if nr<0 || nr>=N || nc<0 || nc>=M {
-                        continue
-                    }
-                    if visitMap[nr][nc] || currentMap[nr][nc] == wall {
-                        continue
-                    }
-                    
-                    visitMap[nr][nc] = true
-                    currentMap[nr][nc] = virus
-                    queue.append((nr, nc))
-                }
-                pointer += 1
+            if currentMap[i][j] == virus {
+                queue.append((i, j))
             }
         }
+    }
+    
+    while pointer < queue.count {
+        let cur = queue[pointer]
+                
+        for k in 0..<4 {
+            let nr = cur.0 + dr[k]
+            let nc = cur.1 + dc[k]
+                    
+            if nr<0 || nr>=N || nc<0 || nc>=M {
+                continue
+            }
+            if currentMap[nr][nc] != safe {
+                continue
+            }
+            currentMap[nr][nc] = virus
+            queue.append((nr, nc))
+        }
+        pointer += 1
     }
     
     let result = currentMap.flatMap{$0}.filter{$0 == safe}.count
