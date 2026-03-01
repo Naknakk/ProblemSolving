@@ -22,10 +22,7 @@ func check(limit: Int) -> Bool {
     return count >= C
 }
 
-var st = 1000000000
-for i in 0..<houses.count-1 {
-    st = min(houses[i+1]-houses[i], st)
-}
+var st = 1
 var en = 1000000000
 var mid = (st+en)/2
 var ans = st
