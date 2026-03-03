@@ -12,29 +12,24 @@ for _ in 0..<T {
     let array: [String] = readLine()!.split{$0 == "," || $0 == "[" || $0 == "]"}
                             .map{String($0)}
     
-    var st = 0
-    var en = N
+    var left = 0
+    var right = N-1
     var reversed = false
     var isError = false
     
     Inner: for op in sequence {
         if op == "R" {
-            if reversed {
-                let temp = st+1
-                st = en+1
-                en = temp
-            } else {
-                let temp = st-1
-                st = en-1
-                en = temp
-            }
             reversed.toggle()
         } else if op == "D" {
-            if st == en {
+            if left > right {
                 isError = true
                 break Inner
             } else {
-                st = reversed ? st - 1 : st + 1
+                if reversed {
+                    right -= 1
+                } else {
+                    left += 1
+                }
             }
         }
     }
@@ -44,12 +39,14 @@ for _ in 0..<T {
     } else {
         var result: [String] = []
         
-        if reversed {
-            for i in stride(from: st, to: en, by: -1) {
+        if left > right {
+            result = []
+        } else if reversed {
+            for i in stride(from: right, through: left, by: -1) {
                 result.append(array[i])
             }
         } else {
-            for i in st..<en {
+            for i in left...right {
                 result.append(array[i])
             }
         }
